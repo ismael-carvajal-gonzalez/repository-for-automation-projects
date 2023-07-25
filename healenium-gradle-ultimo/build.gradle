@@ -1,0 +1,41 @@
+plugins {
+    id 'java'
+    id "net.serenity-bdd.serenity-gradle-plugin" version "3.9.4"
+    id "com.epam.healenium.hlm-report" version "1.1.2"
+}
+
+group = 'co.com.fyffes'
+version = '1.0.0'
+
+java {
+    sourceCompatibility = "17"
+    targetCompatibility = "17"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation ('com.epam.healenium:healenium-web:3.4.3') {
+        exclude group: 'com.google.inject', module: 'guice'
+    }
+
+    testImplementation 'org.junit.vintage:junit-vintage-engine:5.9.3'
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+    testImplementation 'org.slf4j:slf4j-simple:2.0.7'
+    testImplementation 'net.serenity-bdd:serenity-junit:3.9.2'
+    testImplementation 'net.serenity-bdd:serenity-ensure:3.9.2'
+    testImplementation 'net.serenity-bdd:serenity-cucumber:3.9.2'
+    testImplementation 'net.serenity-bdd:serenity-screenplay:3.9.2'
+    testImplementation 'net.serenity-bdd:serenity-screenplay-webdriver:3.9.2'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+test.finalizedBy(aggregate)
+
+defaultTasks 'clean', 'test', 'aggregate'
